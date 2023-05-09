@@ -31,7 +31,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   app.get("/filteredimage", async (req : Request, res : Response) => {
 
     // Define image url
-    const url = req.query.image_url;
+    string url = req.query.image_url;
     // Check image url
     if (!url) {
     //Error nofification
@@ -40,7 +40,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
     else
     {
       try{
-        const filteredPath = await filterImageFromURL(url);
+        string filteredPath = await filterImageFromURL(url);
         // Check filtered path
         if(filteredPath===undefined||filteredPath===null)
         {
