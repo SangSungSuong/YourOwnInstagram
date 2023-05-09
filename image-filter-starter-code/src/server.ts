@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
@@ -28,29 +28,29 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   //   the filtered image file [!!TIP res.sendFile(filteredpath); might be useful]
 
   /**************************************************************************** */
-  app.get("/filteredimage", async (req, res) => {
+  app.get("/filteredimage", async (req : Request, res : Response) => {
 
     // Define image url
-    const Image_Url = req.query.image_url;
+    const url = req.query.image_url;
     // Check image url
-    if (!Image_Url) {
+    if (!url) {
     //Error nofification
       res.status(400).send('Bad request , please check url');
     }
     else
     {
       try{
-        const filteredpath = await filterImageFromURL(Image_Url);
+        const filteredPath = await filterImageFromURL(url);
         // Check filtered path
-        if(filteredpath===undefined||filteredpath===null)
+        if(filteredPath===undefined||filteredPath===null)
         {
           res.status(400).send(`Unable to filter image`);
         }
         else
         {
-          res.sendFile(filteredpath);
+          res.status(200).sendFile(filteredPath+'');
           //Finish - Delete
-          res.on("finish", () => deleteLocalFiles([filteredpath]));
+          res.on("finish", () => deleteLocalFiles([filteredPath]));
         }
       }
       catch(e){
@@ -63,7 +63,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
   // Root Endpoint
   // Displays a simple message to the user
-  app.get( "/", async ( req, res ) => {
+  app.get( "/", async ( req , res ) => {
     res.send("try GET /filteredimage?image_url={{}}")
   } );
   
