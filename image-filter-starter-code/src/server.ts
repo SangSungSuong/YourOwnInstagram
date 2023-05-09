@@ -31,7 +31,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   app.get("/filteredimage", async (req : Request, res : Response) => {
 
     // Define image url
-     const url:string = req.query.image_url;
+    const url:string = req.query.image_url;
     // Check image url
     if (!url) {
     //Error nofification
